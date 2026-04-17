@@ -1,111 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <!-- Mobile App Feel -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#0d0e15" />
-    <title>VLive Web</title>
-    <!-- Google Fonts for Modern Typography -->
+    <meta name="theme-color" content="#0a0a12" />
+    <meta name="description" content="VLive - Virtual Live Streaming Platform for VTubers" />
+    <title>VLive - バーチャルライブ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./src/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <!-- App Container -->
     <div id="app">
-      
-      <!--===============================
-           HOME FEED VIEW 
-      ================================-->
-      <main id="home-view" class="view active">
-        <!-- Glassmorphic Header -->
-        <header class="home-header glass">
-          <h1 class="logo">V<span class="neon-text">Live</span></h1>
-          <div class="header-icons">
-             <div class="icon-circle">🔍</div>
-             <div class="icon-circle">🔔</div>
+
+      <!-- ===== SPLASH SCREEN ===== -->
+      <div id="splash-screen" class="splash">
+        <div class="splash-content">
+          <div class="splash-logo-container">
+            <div class="splash-ring"></div>
+            <div class="splash-icon">V</div>
+          </div>
+          <h1 class="splash-title">V<span>Live</span></h1>
+          <p class="splash-sub">バーチャルライブ配信</p>
+          <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+        </div>
+      </div>
+
+      <!-- ===== HOME VIEW ===== -->
+      <main id="home-view" class="view">
+        <header class="app-header">
+          <h1 class="app-logo">V<span>Live</span></h1>
+          <div class="header-actions">
+            <button class="header-btn" id="search-toggle-btn" aria-label="Search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </button>
+            <button class="header-btn" aria-label="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="notif-dot"></span>
+            </button>
           </div>
         </header>
 
-        <!-- Horizontal Story Bubbles -->
-        <section class="story-bubbles">
-            <div class="bubble active"><div class="live-ring"></div><img src="./vtuber_1.png"><span class="badge">LIVE</span></div>
-            <div class="bubble active"><div class="live-ring"></div><img src="./vtuber_2.png"><span class="badge">LIVE</span></div>
-            <div class="bubble"><img src="./vtuber_1.png"></div>
-            <div class="bubble"><img src="./vtuber_2.png"></div>
-            <div class="bubble"><img src="./vtuber_1.png"></div>
-        </section>
-
-        <!-- Main Feed List -->
-        <section class="feed-section">
-          <h2 class="section-title">Trending Live</h2>
-          <div id="feed-container" class="feed">
-             <!-- Dynamically Populated by JS -->
+        <!-- Search Panel (toggleable) -->
+        <div id="search-panel" class="search-panel hidden">
+          <div class="search-input-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="search-input" placeholder="ユーザーを検索...">
+            <button class="search-cancel" id="search-cancel-btn">Cancel</button>
           </div>
-        </section>
+          <div id="search-results" class="search-results"></div>
+        </div>
 
-        <!-- Bottom Navigation Tabs -->
-        <nav class="bottom-nav glass">
-           <div class="nav-item active">🏠<span class="nav-label">Home</span></div>
-           <div class="nav-item">🧭<span class="nav-label">Discover</span></div>
-           <div class="nav-item add-btn"><div class="add-circle">+</div></div>
-           <div class="nav-item">💬<span class="nav-label">Inbox</span></div>
-           <div class="nav-item">👤<span class="nav-label">Profile</span></div>
+        <!-- Category Tabs -->
+        <nav class="category-tabs" id="category-tabs">
+          <button class="cat-tab active" data-cat="all">すべて</button>
+          <button class="cat-tab" data-cat="music">Music</button>
+          <button class="cat-tab" data-cat="gaming">Gaming</button>
+          <button class="cat-tab" data-cat="chat">Chat</button>
+          <button class="cat-tab" data-cat="tech">Tech</button>
         </nav>
+
+        <!-- Live Story Bubbles -->
+        <section class="stories-section">
+          <div class="stories-scroll" id="stories-scroll"></div>
+        </section>
+
+        <!-- Ranking Banner -->
+        <section class="ranking-banner" id="ranking-section">
+          <div class="ranking-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>ランキング</span>
+          </div>
+          <div class="ranking-scroll" id="ranking-scroll"></div>
+        </section>
+
+        <!-- Feed Grid -->
+        <section class="feed-section">
+          <h2 class="section-heading">ライブ配信中 <span class="live-count-badge" id="live-count">0</span></h2>
+          <div id="feed-grid" class="feed-grid"></div>
+        </section>
       </main>
 
-      <!--===============================
-           LIVE ROOM VIEW 
-      ================================-->
+      <!-- ===== DISCOVER VIEW ===== -->
+      <main id="discover-view" class="view">
+        <header class="app-header">
+          <h2 class="page-title">発見</h2>
+        </header>
+        <section class="discover-content">
+          <div class="discover-categories" id="discover-categories"></div>
+          <h3 class="sub-heading">おすすめ</h3>
+          <div class="discover-grid" id="discover-grid"></div>
+        </section>
+      </main>
+
+      <!-- ===== LIVE VIEW ===== -->
       <main id="live-view" class="view">
-        
-        <!-- Live Avatar Background -->
-        <div id="live-background" class="live-bg">
-            <img id="live-avatar-img" src="" alt="Live Avatar" />
-            <div class="bg-gradient-overlay"></div>
+        <div id="live-bg" class="live-bg">
+          <img id="live-bg-img" src="" alt="">
+          <div class="live-gradient"></div>
         </div>
-        
-        <!-- Top Controls -->
-        <header class="live-header">
-           <div class="host-info glass">
-             <img id="live-host-avatar" src="" class="host-avatar">
-             <div class="host-details">
-                <h3 id="live-host-name">HostName</h3>
-                <span id="live-viewers" class="viewer-count">👁 1.2k</span>
-             </div>
-             <button class="follow-btn">Follow</button>
-           </div>
-           <div class="close-btn glass" id="close-live">✕</div>
+
+        <header class="live-top-bar">
+          <div class="live-host-pill">
+            <img id="live-host-pic" src="" class="host-pic" alt="">
+            <div class="host-meta">
+              <strong id="live-host-name"></strong>
+              <span id="live-viewer-count" class="viewer-tag">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                <span id="live-viewers-num">0</span>
+              </span>
+            </div>
+            <button class="follow-pill" id="follow-btn">Follow</button>
+          </div>
+          <div class="live-top-right">
+            <div class="live-duration" id="live-duration">00:00</div>
+            <button class="close-live-btn" id="close-live-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </div>
         </header>
 
-        <!-- Dynamic Hearts Container -->
-        <div id="hearts-container"></div>
+        <!-- Gift Animation Layer -->
+        <div id="gift-overlay" class="gift-overlay"></div>
+        <!-- Hearts Layer -->
+        <div id="hearts-layer"></div>
 
-        <!-- Chat & Interaction Overlay -->
-        <div class="live-overlay">
-           <div class="chat-container">
-              <div id="chat-messages" class="chat-messages">
-                 <!-- Populated by JS -->
-                 <div class="chat-msg system">Welcome to the Live Room! Please be respectful to the VTuber.</div>
-              </div>
-           </div>
-           
-           <div class="live-controls">
-              <div class="chat-input glass">
-                 <input type="text" placeholder="Say something...">
-                 <button class="send-btn">✈️</button>
-              </div>
-              <div class="side-actions">
-                 <div class="action-btn glass">🎁</div>
-                 <div class="action-btn glass" id="like-btn">❤️</div>
-              </div>
-           </div>
+        <div class="live-bottom">
+          <div class="chat-area">
+            <div class="chat-scroll" id="chat-scroll">
+              <div id="chat-list" class="chat-list"></div>
+            </div>
+          </div>
+          <div class="live-action-bar">
+            <div class="chat-input-wrap">
+              <input type="text" id="chat-input" placeholder="コメントする..." />
+              <button class="send-msg-btn" id="send-msg-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+              </button>
+            </div>
+            <div class="action-icons">
+              <button class="action-circle gift-btn" id="gift-btn" aria-label="Gift">🎁</button>
+              <button class="action-circle like-btn" id="like-btn" aria-label="Like">❤️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gift Panel -->
+        <div id="gift-panel" class="gift-panel hidden">
+          <div class="gift-panel-header">
+            <span>ギフトを送る</span>
+            <button id="close-gift-panel" class="close-gift-panel-btn">✕</button>
+          </div>
+          <div class="gift-grid" id="gift-grid"></div>
+          <div class="coin-balance">
+            <span class="coin-icon">🪙</span> <span id="coin-count">500</span> コイン
+          </div>
         </div>
       </main>
+
+      <!-- ===== PROFILE VIEW ===== -->
+      <main id="profile-view" class="view">
+        <header class="app-header">
+          <h2 class="page-title">マイページ</h2>
+          <button class="header-btn" aria-label="Settings">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </button>
+        </header>
+        <div class="profile-content">
+          <div class="profile-card">
+            <div class="profile-avatar-wrap">
+              <img src="./vtuber_1.png" class="profile-avatar" alt="My Avatar">
+              <div class="online-dot"></div>
+            </div>
+            <h2 class="profile-name">Akira Neon</h2>
+            <p class="profile-about">バーチャルシンガー 🎤 毎日配信中！</p>
+            <div class="profile-stats">
+              <div class="stat"><strong>128</strong><span>フォロワー</span></div>
+              <div class="stat"><strong>45</strong><span>フォロー中</span></div>
+              <div class="stat"><strong>1.2k</strong><span>いいね</span></div>
+            </div>
+            <div class="profile-socials">
+              <a href="#" class="social-link">𝕏</a>
+              <a href="#" class="social-link">LINE</a>
+              <a href="#" class="social-link">Facebook</a>
+            </div>
+          </div>
+          <div class="profile-section">
+            <h3 class="sub-heading">ウォレット</h3>
+            <div class="wallet-card">
+              <div class="wallet-item"><span class="wallet-icon">🪙</span><div><strong>500</strong><span>コイン</span></div></div>
+              <div class="wallet-item"><span class="wallet-icon">🎁</span><div><strong>0</strong><span>ギフト</span></div></div>
+              <div class="wallet-item"><span class="wallet-icon">❤️</span><div><strong>0</strong><span>いいね</span></div></div>
+            </div>
+          </div>
+          <div class="profile-section">
+            <h3 class="sub-heading">配信履歴</h3>
+            <div class="history-empty">まだ配信履歴がありません</div>
+          </div>
+        </div>
+      </main>
+
+      <!-- ===== BOTTOM NAV ===== -->
+      <nav id="bottom-nav" class="bottom-nav">
+        <button class="nav-tab active" data-view="home-view">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span>ホーム</span>
+        </button>
+        <button class="nav-tab" data-view="discover-view">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.9c-.61 0-1.1.49-1.1 1.1s.49 1.1 1.1 1.1c.61 0 1.1-.49 1.1-1.1s-.49-1.1-1.1-1.1zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/></svg>
+          <span>発見</span>
+        </button>
+        <button class="nav-tab go-live-tab" id="go-live-btn">
+          <div class="go-live-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          </div>
+        </button>
+        <button class="nav-tab" data-view="inbox-view">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+          <span>メッセージ</span>
+        </button>
+        <button class="nav-tab" data-view="profile-view">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          <span>マイページ</span>
+        </button>
+      </nav>
 
     </div>
-    <script type="module" src="./src/main.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>
