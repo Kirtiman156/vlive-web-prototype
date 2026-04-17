@@ -7,10 +7,10 @@
 
 const CATEGORIES = [
   { id: 'all', name: 'すべて' },
-  { id: 'music', name: 'Music' },
-  { id: 'gaming', name: 'Gaming' },
-  { id: 'chat', name: 'Just Chatting' },
-  { id: 'tech', name: 'Tech' },
+  { id: 'music', name: '音楽' },
+  { id: 'gaming', name: 'ゲーム' },
+  { id: 'chat', name: 'トーク' },
+  { id: 'tech', name: 'テック' },
 ];
 
 const AVATARS = [
@@ -22,23 +22,23 @@ const AVATARS = [
   './vtuber_6.png',
 ];
 
-// Mimics entity.UserLiveWithCategory
+// Mimics entity.UserLiveWithCategory — all Japanese names and titles
 const MOCK_STREAMS = [
-  { live_id: 'L001', user_id: 'U001', nick_name: 'Akira Neon', stream_name: '🎵 深夜カラオケ配信〜リクエスト受付中！', avatar: AVATARS[0], is_live: true, total_viewers: 2134, category: 'music' },
-  { live_id: 'L002', user_id: 'U002', nick_name: 'Zero Kuro', stream_name: 'ランク戦！ダイヤ目指す💎', avatar: AVATARS[1], is_live: true, total_viewers: 5421, category: 'gaming' },
-  { live_id: 'L003', user_id: 'U003', nick_name: 'Sakura Mochi', stream_name: '☕ 朝の雑談タイム〜おはよう！', avatar: AVATARS[2], is_live: true, total_viewers: 856, category: 'chat' },
-  { live_id: 'L004', user_id: 'U004', nick_name: 'Dark Shade', stream_name: 'ホラーゲーム実況…怖い😱', avatar: AVATARS[3], is_live: true, total_viewers: 3201, category: 'gaming' },
-  { live_id: 'L005', user_id: 'U005', nick_name: 'Kitsune Hana', stream_name: '🎶 オリジナル曲披露！新曲あり', avatar: AVATARS[4], is_live: true, total_viewers: 1789, category: 'music' },
-  { live_id: 'L006', user_id: 'U006', nick_name: 'Silver Wind', stream_name: 'テック雑談＆コーディング配信 💻', avatar: AVATARS[5], is_live: true, total_viewers: 943, category: 'tech' },
+  { live_id: 'L001', user_id: 'U001', nick_name: '桜音アキラ', stream_name: '🎵 深夜カラオケ配信〜リクエスト受付中！', avatar: AVATARS[0], is_live: true, total_viewers: 2134, category: 'music' },
+  { live_id: 'L002', user_id: 'U002', nick_name: '黒羽ゼロ', stream_name: 'ランク戦！ダイヤ目指す💎【ガチ勢】', avatar: AVATARS[1], is_live: true, total_viewers: 5421, category: 'gaming' },
+  { live_id: 'L003', user_id: 'U003', nick_name: '桜餅ももか', stream_name: '☕ 朝の雑談タイム〜おはよう！', avatar: AVATARS[2], is_live: true, total_viewers: 856, category: 'chat' },
+  { live_id: 'L004', user_id: 'U004', nick_name: '影闇シェード', stream_name: 'ホラーゲーム実況…怖すぎる😱【絶叫注意】', avatar: AVATARS[3], is_live: true, total_viewers: 3201, category: 'gaming' },
+  { live_id: 'L005', user_id: 'U005', nick_name: '狐花はな', stream_name: '🎶 オリジナル曲初披露！聴いてほしい新曲', avatar: AVATARS[4], is_live: true, total_viewers: 1789, category: 'music' },
+  { live_id: 'L006', user_id: 'U006', nick_name: '銀風シルヴァ', stream_name: 'テック雑談＆ライブコーディング配信💻', avatar: AVATARS[5], is_live: true, total_viewers: 943, category: 'tech' },
 ];
 
-// Mimics entity.RankedUser
+// Mimics entity.RankedUser — all Japanese names
 const MOCK_RANKINGS = [
-  { id: 'U002', name: 'Zero Kuro', image_url: AVATARS[1], total_duration: 48200 },
-  { id: 'U001', name: 'Akira Neon', image_url: AVATARS[0], total_duration: 36100 },
-  { id: 'U005', name: 'Kitsune Hana', image_url: AVATARS[4], total_duration: 28500 },
-  { id: 'U004', name: 'Dark Shade', image_url: AVATARS[3], total_duration: 21000 },
-  { id: 'U003', name: 'Sakura Mochi', image_url: AVATARS[2], total_duration: 14300 },
+  { id: 'U002', name: '黒羽ゼロ', image_url: AVATARS[1], total_duration: 48200 },
+  { id: 'U001', name: '桜音アキラ', image_url: AVATARS[0], total_duration: 36100 },
+  { id: 'U005', name: '狐花はな', image_url: AVATARS[4], total_duration: 28500 },
+  { id: 'U004', name: '影闇シェード', image_url: AVATARS[3], total_duration: 21000 },
+  { id: 'U003', name: '桜餅ももか', image_url: AVATARS[2], total_duration: 14300 },
 ];
 
 const GIFTS = [
@@ -52,11 +52,12 @@ const GIFTS = [
   { emoji: '⭐', name: '星', price: 5 },
 ];
 
-const CHAT_USERNAMES = ['sakura_fan', 'pro_gamer99', 'vt_lover', 'anon_user', 'neon_light', 'kawaii_chan', 'stream_watcher', 'midnight_owl'];
+const CHAT_USERNAMES = ['さくらファン', 'ゲーム好き99', '推し活中', '匿名ユーザー', 'ネオンライト', 'かわいいちゃん', '配信ウォッチャー', '夜型人間', '常連さん', 'ニコニコ太郎'];
 const CHAT_MESSAGES = [
-  'かわいい！😍', 'www', 'もう一曲お願い！', '888888', '神配信！',
-  'こんばんは〜', 'リグすごい！', '何のゲーム？', 'w', '🔥🔥🔥',
-  'フォローした！', 'いいね！', '最高！', 'お疲れ様！',
+  'かわいい！😍', 'ｗｗｗ', 'もう一曲お願い！', '888888', '神配信！',
+  'こんばんは〜', 'リグすごい！', '何のゲーム？', 'ｗ', '🔥🔥🔥',
+  'フォローした！', '最高すぎる！', '応援してます！', 'お疲れ様〜',
+  '初見です！よろしく', 'まじ上手い', '声好きすぎる', '毎日来てるよ',
 ];
 
 // ── DOM References ─────────────────────────────────────────
@@ -265,12 +266,13 @@ function renderDiscover() {
     'linear-gradient(135deg, #69f0ae, #00c853)',
   ];
   const catEmojis = ['🎵', '🎮', '💬', '💻'];
+  const catNames = ['音楽', 'ゲーム', 'トーク', 'テック'];
   discoverCategories.innerHTML = '';
   CATEGORIES.filter(c => c.id !== 'all').forEach((c, i) => {
     const card = document.createElement('div');
     card.className = 'discover-cat-card';
     card.style.background = catColors[i % catColors.length];
-    card.innerHTML = `<span class="cat-emoji">${catEmojis[i]}</span>${c.name}`;
+    card.innerHTML = `<span class="cat-emoji">${catEmojis[i]}</span>${catNames[i]}`;
     discoverCategories.appendChild(card);
   });
 
@@ -350,7 +352,7 @@ function updateDuration() {
 // ── Follow ─────────────────────────────────────────────────
 followBtn.addEventListener('click', () => {
   isFollowing = !isFollowing;
-  followBtn.textContent = isFollowing ? 'Following' : 'Follow';
+  followBtn.textContent = isFollowing ? 'フォロー中' : 'フォロー';
   followBtn.classList.toggle('following', isFollowing);
 });
 
