@@ -223,10 +223,17 @@ img { display: block; }
    CATEGORY TABS
    ============================ */
 .category-tabs {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 29;
   display: flex; gap: 8px;
-  padding: 14px 20px 6px;
+  padding: 14px 20px 10px;
   overflow-x: auto;
   scrollbar-width: none;
+  background: rgba(10,10,18,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .category-tabs::-webkit-scrollbar { display: none; }
 .cat-tab {
