@@ -110,6 +110,24 @@ img { display: block; }
   z-index: 2;
 }
 
+/* Home view uses fixed top bar + scrollable content */
+#home-view {
+  overflow: hidden;
+}
+.home-fixed-top {
+  position: relative;
+  z-index: 30;
+  flex-shrink: 0;
+}
+.home-scroll-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding-bottom: calc(var(--nav-height) + 16px);
+}
+.home-scroll-content::-webkit-scrollbar { display: none; }
+
 /* ============================
    SPLASH SCREEN
    ============================ */
@@ -155,11 +173,10 @@ img { display: block; }
    APP HEADER
    ============================ */
 .app-header {
-  position: sticky; top: 0; z-index: 30;
   display: flex; align-items: center; justify-content: space-between;
   height: var(--header-height);
   padding: 0 20px;
-  background: rgba(10,10,18,0.85);
+  background: rgba(10,10,18,0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-subtle);
@@ -223,16 +240,11 @@ img { display: block; }
    CATEGORY TABS
    ============================ */
 .category-tabs {
-  position: sticky;
-  top: var(--header-height);
-  z-index: 29;
   display: flex; gap: 8px;
-  padding: 14px 20px 10px;
+  padding: 10px 20px;
   overflow-x: auto;
   scrollbar-width: none;
-  background: rgba(10,10,18,0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(10,10,18,0.95);
   border-bottom: 1px solid var(--border-subtle);
 }
 .category-tabs::-webkit-scrollbar { display: none; }

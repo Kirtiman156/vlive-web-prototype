@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css?v=2" />
+    <link rel="stylesheet" href="./style.css?v=3" />
   </head>
   <body>
     <div id="app">
@@ -29,18 +29,30 @@
 
       <!-- ===== HOME VIEW ===== -->
       <main id="home-view" class="view">
-        <header class="app-header">
-          <h1 class="app-logo">V<span>Live</span></h1>
-          <div class="header-actions">
-            <button class="header-btn" id="search-toggle-btn" aria-label="Search">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            </button>
-            <button class="header-btn" aria-label="Notifications">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-              <span class="notif-dot"></span>
-            </button>
-          </div>
-        </header>
+        <!-- Fixed Top Bar -->
+        <div class="home-fixed-top">
+          <header class="app-header">
+            <h1 class="app-logo">V<span>Live</span></h1>
+            <div class="header-actions">
+              <button class="header-btn" id="search-toggle-btn" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              </button>
+              <button class="header-btn" aria-label="Notifications">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="notif-dot"></span>
+              </button>
+            </div>
+          </header>
+
+          <!-- Category Tabs -->
+          <nav class="category-tabs" id="category-tabs">
+            <button class="cat-tab active" data-cat="all">すべて</button>
+            <button class="cat-tab" data-cat="music">Music</button>
+            <button class="cat-tab" data-cat="gaming">Gaming</button>
+            <button class="cat-tab" data-cat="chat">Chat</button>
+            <button class="cat-tab" data-cat="tech">Tech</button>
+          </nav>
+        </div>
 
         <!-- Search Panel (toggleable) -->
         <div id="search-panel" class="search-panel hidden">
@@ -52,34 +64,28 @@
           <div id="search-results" class="search-results"></div>
         </div>
 
-        <!-- Category Tabs -->
-        <nav class="category-tabs" id="category-tabs">
-          <button class="cat-tab active" data-cat="all">すべて</button>
-          <button class="cat-tab" data-cat="music">Music</button>
-          <button class="cat-tab" data-cat="gaming">Gaming</button>
-          <button class="cat-tab" data-cat="chat">Chat</button>
-          <button class="cat-tab" data-cat="tech">Tech</button>
-        </nav>
+        <!-- Scrollable Content -->
+        <div class="home-scroll-content">
+          <!-- Live Story Bubbles -->
+          <section class="stories-section">
+            <div class="stories-scroll" id="stories-scroll"></div>
+          </section>
 
-        <!-- Live Story Bubbles -->
-        <section class="stories-section">
-          <div class="stories-scroll" id="stories-scroll"></div>
-        </section>
+          <!-- Ranking Banner -->
+          <section class="ranking-banner" id="ranking-section">
+            <div class="ranking-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>ランキング</span>
+            </div>
+            <div class="ranking-scroll" id="ranking-scroll"></div>
+          </section>
 
-        <!-- Ranking Banner -->
-        <section class="ranking-banner" id="ranking-section">
-          <div class="ranking-header">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span>ランキング</span>
-          </div>
-          <div class="ranking-scroll" id="ranking-scroll"></div>
-        </section>
-
-        <!-- Feed Grid -->
-        <section class="feed-section">
-          <h2 class="section-heading">ライブ配信中 <span class="live-count-badge" id="live-count">0</span></h2>
-          <div id="feed-grid" class="feed-grid"></div>
-        </section>
+          <!-- Feed Grid -->
+          <section class="feed-section">
+            <h2 class="section-heading">ライブ配信中 <span class="live-count-badge" id="live-count">0</span></h2>
+            <div id="feed-grid" class="feed-grid"></div>
+          </section>
+        </div>
       </main>
 
       <!-- ===== DISCOVER VIEW ===== -->
